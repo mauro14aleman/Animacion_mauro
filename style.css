@@ -1,8 +1,17 @@
-/* ========== RESET Y BASE ========== */
+/* ========== RESET Y VARIABLES ========== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+:root {
+  --primary-pink: #ff6b9d;
+  --secondary-pink: #c44569;
+  --soft-purple: #a18cd1;
+  --glow-pink: rgba(255, 107, 157, 0.4);
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.2);
 }
 
 html, body {
@@ -10,158 +19,293 @@ html, body {
   height: 100%;
   overflow: hidden;
   font-family: 'Quicksand', sans-serif;
-  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-  color: #fff;
+  background: radial-gradient(circle at center, #1b1c36, #0f1026, #070714);
+  color: #ffffff;
 }
 
-/* ========== PANTALLAS ========== */
+/* Fondo decorativo de luces sutiles */
+.stars-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star-particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+}
+
+/* ========== PANTALLAS Y TRANSICIONES ========== */
 .screen {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   opacity: 0;
-  transition: opacity 0.9s ease;
+  visibility: hidden;
+  transition: opacity 0.8s ease, transform 0.8s ease;
   z-index: 1;
   padding: 20px;
+  transform: scale(0.96);
 }
 
 .screen.active {
-  display: flex;
   opacity: 1;
+  visibility: visible;
   z-index: 10;
+  transform: scale(1);
+}
+
+/* ========== DECORACIÓN ESTILO VENTANA DE APPLICACIÓN ========== */
+.window-header {
+  height: 38px;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot.red { background: #ff5f56; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green { background: #27c93f; }
+
+.window-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 /* ========== 1. VENTANA DEL VIDEO ========== */
-#intro-screen {
-  background: transparent;
+.video-window {
+  width: 92%;
+  max-width: 780px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 30px var(--glow-pink);
 }
 
-.video-window {
-  width: 90%;
-  max-width: 820px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.45);
+.video-wrapper {
   position: relative;
+  width: 100%;
+  background: #000;
 }
 
 #intro-video {
   width: 100%;
+  max-height: 60vh;
   display: block;
-  border-radius: 24px 24px 0 0;
+  object-fit: contain;
+}
+
+.unmute-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.unmute-btn:hover {
+  background: rgba(255, 107, 157, 0.8);
 }
 
 .video-footer {
-  padding: 18px;
+  padding: 16px;
   text-align: center;
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
   background: rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.3px;
 }
 
-/* ========== 2. BOTÓN BONITO DESPUÉS DEL VIDEO ========== */
-#retro-screen {
-  background: transparent;
+/* ========== 2. PANTALLA BOTÓN CONTINUAR ========== */
+.button-card {
+  text-align: center;
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding: 40px 30px;
+  border-radius: 28px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.card-subtitle {
+  font-size: 18px;
+  margin-bottom: 25px;
+  color: #e2d9f3;
+  font-weight: 500;
 }
 
 .continue-btn {
-  padding: 20px 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 42px;
   font-family: 'Quicksand', sans-serif;
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 19px;
+  font-weight: 700;
   color: #fff;
   background: linear-gradient(135deg, #ff6b9d, #c44569);
   border: none;
   border-radius: 60px;
   cursor: pointer;
   box-shadow: 0 12px 30px rgba(255, 107, 157, 0.45);
-  transition: all 0.35s ease;
-  letter-spacing: 0.5px;
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .continue-btn:hover {
-  transform: translateY(-4px) scale(1.04);
-  box-shadow: 0 18px 40px rgba(255, 107, 157, 0.6);
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 18px 40px rgba(255, 107, 157, 0.65);
 }
 
-/* ========== 3. VENTANA DE LA DEDICATORIA ========== */
+/* ========== 3. VENTANA DEDICATORIA ========== */
 #dedication-screen {
-  background: transparent;
-  flex-direction: column;
-  gap: 30px;
+  gap: 25px;
 }
 
 .dedication-window {
-  width: 90%;
+  width: 92%;
   max-width: 680px;
-  background: rgba(255, 255, 255, 0.09);
-  backdrop-filter: blur(18px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 28px;
-  padding: 45px 40px;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-  text-align: center;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+.dedication-body {
+  padding: 35px 30px;
+  max-height: 55vh;
+  overflow-y: auto;
+}
+
+/* Scrollbar bonito */
+.dedication-body::-webkit-scrollbar {
+  width: 6px;
+}
+.dedication-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
 }
 
 .dedication-text {
-  font-family: 'Quicksand', sans-serif;
-  font-size: clamp(17px, 4.2vw, 21px);
-  line-height: 1.75;
-  color: #f8f0ff;
+  font-size: clamp(16px, 4vw, 20px);
+  line-height: 1.8;
+  color: #fcefe6;
   font-weight: 500;
   white-space: pre-wrap;
-  min-height: 160px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Botón de sorpresa */
+/* Cursor interactivo de maquina de escribir */
+.dedication-text::after {
+  content: '|';
+  color: var(--primary-pink);
+  animation: blink 0.8s infinite;
+  font-weight: 700;
+  margin-left: 3px;
+}
+
+.dedication-text.typing-done::after {
+  display: none;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Botón Sorpresa */
 .surprise-btn {
-  padding: 18px 42px;
+  padding: 16px 38px;
   font-family: 'Quicksand', sans-serif;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
   color: #fff;
   background: linear-gradient(135deg, #a18cd1, #fbc2eb);
   border: none;
   border-radius: 50px;
   cursor: pointer;
   opacity: 0;
-  transform: translateY(25px);
-  transition: all 0.6s ease;
-  box-shadow: 0 10px 28px rgba(161, 140, 209, 0.45);
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(161, 140, 209, 0.4);
 }
 
 .surprise-btn.visible {
   opacity: 1;
+  visibility: visible;
   transform: translateY(0);
 }
 
 .surprise-btn:hover {
   transform: translateY(-3px) scale(1.04);
-  box-shadow: 0 14px 35px rgba(161, 140, 209, 0.6);
+  box-shadow: 0 15px 38px rgba(161, 140, 209, 0.6);
 }
 
 /* ========== 4. FOTO FINAL ========== */
-#surprise-screen {
-  background: transparent;
+.photo-card {
+  text-align: center;
+  max-width: 90%;
+  max-height: 85vh;
 }
 
 #surprise-image {
-  max-width: 90%;
-  max-height: 82vh;
-  border-radius: 20px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  max-width: 100%;
+  max-height: 72vh;
+  border-radius: 24px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(255, 107, 157, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.25);
   object-fit: contain;
   opacity: 0;
-  transform: scale(0.88);
-  transition: all 1.3s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: scale(0.85);
+  transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 #surprise-image.show {
@@ -169,14 +313,31 @@ html, body {
   transform: scale(1);
 }
 
-/* ========== RESPONSIVE ========== */
-@media (max-width: 600px) {
-  .dedication-window {
-    padding: 32px 22px;
-  }
+.photo-caption {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffe0eb;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: opacity 1s ease 0.6s;
+}
 
+#surprise-image.show + .photo-caption {
+  opacity: 1;
+}
+
+/* ========== MEDIA QUERIES ========== */
+@media (max-width: 600px) {
+  .dedication-body {
+    padding: 24px 18px;
+  }
   .continue-btn {
-    padding: 18px 36px;
-    font-size: 18px;
+    padding: 16px 32px;
+    font-size: 17px;
+  }
+  .surprise-btn {
+    padding: 14px 30px;
+    font-size: 16px;
   }
 }
