@@ -7,40 +7,198 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="estilo.css">
+    
+    <style>
+        /* RESET BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Quicksand', sans-serif;
+            background-color: #0f1026;
+            color: #ffffff;
+        }
+
+        /* MANEJO DE PANTALLAS (SÓLO 1 VISIBLE A LA VEZ) */
+        .scene {
+            display: none; /* Oculta todas las pantallas por defecto */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 10;
+            background-color: #0f1026;
+        }
+
+        .scene.active {
+            display: flex !important; /* Muestra unicamente la pantalla activa */
+        }
+
+        /* PANTALLA 1: VÍDEO */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            height: 70vh;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            background: #000;
+            margin-bottom: 20px;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* PANTALLA 2: DEDICATORIA */
+        .card-dialog {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 30px 20px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .title-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ff8fb6;
+            margin-bottom: 20px;
+        }
+
+        #dialog-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            min-height: 140px;
+            color: #ffffff;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* PANTALLA 3: SORPRESA FINAL */
+        .card-final {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .photo-frame {
+            width: 100%;
+            max-height: 60vh;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+            background: #ffffff;
+            padding: 12px 12px 25px 12px;
+            margin-bottom: 25px;
+        }
+
+        #final-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .card-final h2 {
+            font-size: 1.3rem;
+            color: #ff8fb6;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        /* BOTONES DE NAVEGACIÓN */
+        .action-btn {
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            color: #ffffff;
+            border: none;
+            padding: 15px 32px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 30px;
+            box-shadow: 0 5px 20px rgba(255, 117, 140, 0.4);
+            cursor: pointer;
+            outline: none;
+            transition: transform 0.2s, opacity 0.3s;
+        }
+
+        .action-btn:active {
+            transform: scale(0.95);
+        }
+
+        .hidden-btn {
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+        }
+
+        .visible-btn {
+            opacity: 1;
+            pointer-events: auto;
+            visibility: visible;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- PANTALLA 1: VÍDEO INTRO -->
+    <!-- PANTALLA 1: SÓLO EL VÍDEO + BOTÓN -->
     <section id="scene-video" class="scene active">
-        <div class="video-wrapper">
-            <video id="intro-video" autoplay muted playsinline>
+        <div class="video-container">
+            <video id="intro-video" autoplay muted playsinline loop>
                 <source src="activos/videos/intro.mp4" type="video/mp4">
             </video>
         </div>
-        <button id="btn-to-dialog" class="nav-btn">Continuar ❤️</button>
+        <button id="btn-to-dialog" class="action-btn">Continuar ❤️</button>
     </section>
 
-    <!-- PANTALLA 2: DEDICATORIA / TEXTO -->
+    <!-- PANTALLA 2: DEDICATORIA FLUIDA AUTO-AVANZABLE -->
     <section id="scene-dialog" class="scene">
-        <div class="dialog-card">
-            <h2 class="name">👑 Para mi princesita</h2>
+        <div class="card-dialog">
+            <h2 class="title-name">👑 Para mi princesita</h2>
             <p id="dialog-text"></p>
-            <button id="btn-to-final" class="nav-btn" style="display: none;">Ver sorpresa ✨</button>
+            <button id="btn-to-final" class="action-btn hidden-btn">Ver sorpresa ✨</button>
         </div>
     </section>
 
     <!-- PANTALLA 3: FOTO FINAL Y MÚSICA -->
     <section id="scene-final" class="scene">
-        <div class="final-card">
-            <div class="img-container">
-                <img id="final-image" src="activos/images/sorpresa.png" alt="Nuestra foto">
+        <div class="card-final">
+            <div class="photo-frame">
+                <img id="final-image" src="activos/images/sorpresa.png" alt="Nuestra Foto">
             </div>
             <h2>Te amo con todo mi corazón ❤️</h2>
         </div>
     </section>
 
     <div id="youtube-container"></div>
+
     <script src="main.js"></script>
 </body>
 </html>
