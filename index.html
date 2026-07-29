@@ -1,35 +1,46 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Para ti ❤️</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilo.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para ti ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-<div id="stars-container"></div>
 
-<section id="scene-video" class="scene active">
-<video id="intro-video" autoplay muted playsinline>
-<source src="activos/videos/intro.mp4" type="video/mp4">
-</video>
-</section>
+    <!-- PANTALLA 1: VÍDEO INTRO -->
+    <section id="scene-video" class="scene active">
+        <div class="video-wrapper">
+            <video id="intro-video" autoplay muted playsinline>
+                <source src="activos/videos/intro.mp4" type="video/mp4">
+            </video>
+        </div>
+        <button id="btn-to-dialog" class="nav-btn">Continuar ❤️</button>
+    </section>
 
-<section id="scene-dialog" class="scene">
-<div class="dialog-box">
-<div class="name">👑 Para mi princesita</div>
-<p id="dialog-text"></p>
-<div id="hint">Haz clic para continuar ▶</div>
-</div>
-</section>
+    <!-- PANTALLA 2: DEDICATORIA / TEXTO -->
+    <section id="scene-dialog" class="scene">
+        <div class="dialog-card">
+            <h2 class="name">👑 Para mi princesita</h2>
+            <p id="dialog-text"></p>
+            <button id="btn-to-final" class="nav-btn" style="display: none;">Ver sorpresa ✨</button>
+        </div>
+    </section>
 
-<section id="scene-final" class="scene">
-<img id="final-image" src="activos/images/sorpresa.png">
-<h2>Te amo con todo mi corazón ❤️</h2>
-</section>
-<div id="youtube-container"></div>
-<script src="main.js"></script>
-</body></html>
+    <!-- PANTALLA 3: FOTO FINAL Y MÚSICA -->
+    <section id="scene-final" class="scene">
+        <div class="final-card">
+            <div class="img-container">
+                <img id="final-image" src="activos/images/sorpresa.png" alt="Nuestra foto">
+            </div>
+            <h2>Te amo con todo mi corazón ❤️</h2>
+        </div>
+    </section>
+
+    <div id="youtube-container"></div>
+    <script src="main.js"></script>
+</body>
+</html>
