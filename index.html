@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para ti ❤️</title>
+  <link rel="stylesheet" href="estilo.css" />
+  <!-- Fuente estilo retro / pixel -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
 
+  <!-- ========== 1. VIDEO DE INTRO ========== -->
+  <section id="intro-screen" class="screen active">
+    <video id="intro-video" autoplay muted playsinline>
+      <source src="activos/videos/intro.mp4" type="video/mp4" />
+      Tu navegador no soporta el video.
+    </video>
+  </section>
+
+  <!-- ========== 2. PANTALLA RETRO ========== -->
+  <section id="retro-screen" class="screen">
+    <div class="retro-box">
+      <p class="retro-text">Pulsa acá para continuar</p>
+      <div class="blink">▼</div>
+    </div>
+  </section>
+
+  <!-- ========== 3. DEDICATORIA ========== -->
+  <section id="dedication-screen" class="screen">
+    <div class="clouds"></div>
+    <div class="dedication-box">
+      <div id="dedication-text" class="dedication-text"></div>
+    </div>
+    <button id="surprise-btn" class="hidden-btn">Pulsa acá para tu sorpresa</button>
+  </section>
+
+  <!-- ========== 4. SORPRESA (IMAGEN + MÚSICA) ========== -->
+  <section id="surprise-screen" class="screen">
+    <img id="surprise-image" src="activos/images/sorpresa.png" alt="Para ti" />
+  </section>
+
+  <!-- YouTube oculto (solo audio) -->
+  <div id="youtube-container"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>
