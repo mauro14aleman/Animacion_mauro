@@ -1,86 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Para ti ❤️</title>
-
-  <!-- Fuente Quicksand de Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="estilo.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Para ti ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css">
 </head>
 <body>
+<div id="stars-container"></div>
 
-  <!-- Fondo de partículas de brillo dinámicas -->
-  <div class="stars-container" id="stars-container"></div>
+<section id="scene-video" class="scene active">
+<video id="intro-video" autoplay muted playsinline>
+<source src="activos/videos/intro.mp4" type="video/mp4">
+</video>
+</section>
 
-  <!-- 1. VENTANA DEL VIDEO -->
-  <section id="intro-screen" class="screen active">
-    <div class="video-window">
-      <div class="window-header">
-        <span class="dot red"></span>
-        <span class="dot yellow"></span>
-        <span class="dot green"></span>
-        <span class="window-title">Un mensaje especial...</span>
-      </div>
-      <div class="video-wrapper">
-        <video id="intro-video" autoplay muted playsinline>
-          <source src="activos/videos/intro.mp4" type="video/mp4" />
-          Tu navegador no soporta el video.
-        </video>
-        <!-- Overlay discreto por si el navegador bloquea autoplay con sonido -->
-        <button id="unmute-btn" class="unmute-btn" title="Activar sonido">🔊 Activar audio</button>
-      </div>
-      <div class="video-footer">
-        ✨ Mira el video hasta el final ✨
-      </div>
-    </div>
-  </section>
+<section id="scene-dialog" class="scene">
+<div class="dialog-box">
+<div class="name">👑 Para mi princesita</div>
+<p id="dialog-text"></p>
+<div id="hint">Haz clic para continuar ▶</div>
+</div>
+</section>
 
-  <!-- 2. BOTÓN PARA CONTINUAR -->
-  <section id="retro-screen" class="screen">
-    <div class="button-card">
-      <p class="card-subtitle">Tengo algo más que decirte...</p>
-      <button class="continue-btn" id="continue-btn">
-        <span>Pulsa aquí para continuar</span>
-        <span class="btn-icon">💖</span>
-      </button>
-    </div>
-  </section>
-
-  <!-- 3. VENTANA DE LA DEDICATORIA -->
-  <section id="dedication-screen" class="screen">
-    <div class="dedication-window">
-      <div class="window-header">
-        <span class="dot red"></span>
-        <span class="dot yellow"></span>
-        <span class="dot green"></span>
-        <span class="window-title">Para mi princesita 👑</span>
-      </div>
-      <div class="dedication-body">
-        <p id="dedication-text" class="dedication-text"></p>
-      </div>
-    </div>
-    
-    <button id="surprise-btn" class="surprise-btn">
-      ✨ Pulsa aquí para tu sorpresa ✨
-    </button>
-  </section>
-
-  <!-- 4. FOTO FINAL Y MÚSICA -->
-  <section id="surprise-screen" class="screen">
-    <div class="photo-card">
-      <img id="surprise-image" src="activos/images/sorpresa.png" alt="Para ti con amor" />
-      <div class="photo-caption">Te amo con todo mi corazón 💕</div>
-    </div>
-  </section>
-
-  <!-- Contenedor oculto de YouTube -->
-  <div id="youtube-container"></div>
-
-  <script src="main.js"></script>
-</body>
-</html>
+<section id="scene-final" class="scene">
+<img id="final-image" src="activos/images/sorpresa.png">
+<h2>Te amo con todo mi corazón ❤️</h2>
+</section>
+<div id="youtube-container"></div>
+<script src="main.js"></script>
+</body></html>
