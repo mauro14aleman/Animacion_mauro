@@ -1,78 +1,82 @@
-const dialogs = [
-    'Hola mi princesa...\n\nSé que vienen días difíciles, pero no tienes que pasarlos sola.',
-    'Quiero ser tu refugio, cuidarte y consentirte. Prepararte tu comida favorita y darte muchos abrazos.',
+// Frases de la dedicatoria
+const poemVerses = [
+    'Hola mi princesa...',
+    'Sé que vienen días difíciles, pero no tienes que pasarlos sola.',
+    'Quiero ser tu refugio, cuidarte y consentirte.',
+    'Prepararte tu comida favorita y darte muchos abrazos.',
     'Te amo muchísimo. Gracias por existir. ❤️'
 ];
 
-const sv = document.getElementById('scene-video');
-const sd = document.getElementById('scene-dialog');
-const sf = document.getElementById('scene-final');
+const sceneVideo = document.getElementById('scene-video');
+const sceneDialog = document.getElementById('scene-dialog');
+const sceneFinal = document.getElementById('scene-final');
 
 const btnToDialog = document.getElementById('btn-to-dialog');
 const btnToFinal = document.getElementById('btn-to-final');
-const txt = document.getElementById('dialog-text');
+const dialogText = document.getElementById('dialog-text');
 const video = document.getElementById('intro-video');
 
-let currentDialogIndex = 0;
-let typingTimer = null;
+let verseIndex = 0;
+let typingInterval = null;
 
-function showScene(targetScene) {
+// Cambia de pantalla ocultando las demás
+function changeScene(targetScene) {
     document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
     targetScene.classList.add('active');
 }
 
-// Pantalla 1 -> Pantalla 2 (Botón)
+// Pantalla 1 -> Pantalla 2
 btnToDialog.addEventListener('click', () => {
     if (video) video.pause();
-    showScene(sd);
-    startDialogSequence();
+    changeScene(sceneDialog);
+    startFluidedPoem();
 });
 
-// Reproducción automática del texto en la Pantalla 2
-function startDialogSequence() {
-    txt.textContent = '';
-    currentDialogIndex = 0;
-    typeText(dialogs[currentDialogIndex], () => {
-        // Al terminar el primer texto, avanzar al siguiente tras una breve pausa
-        advanceDialogs();
-    });
+// Escribe texto fluido sin necesidad de dar clics
+function startFluidedPoem() {
+    verseIndex = 0;
+    btnToFinal.classList.remove('visible-btn');
+    btnToFinal.classList.add('hidden-btn');
+    showNextVerse();
 }
 
-function advanceDialogs() {
-    currentDialogIndex++;
-    if (currentDialogIndex < dialogs.length) {
-        setTimeout(() => {
-            typeText(dialogs[currentDialogIndex], advanceDialogs);
-        }, 1800);
+function showNextVerse() {
+    if (verseIndex < poemVerses.length) {
+        typeVerse(poemVerses[verseIndex], () => {
+            verseIndex++;
+            // Espera 2 segundos antes de escribir el siguiente verso de manera fluida
+            setTimeout(showNextVerse, 2000);
+        });
     } else {
-        // Al terminar todos los textos, se muestra el botón para la pantalla 3
-        btnToFinal.style.display = 'inline-block';
+        // Al terminar todos los versos, aparece el botón a la Pantalla 3
+        btnToFinal.classList.remove('hidden-btn');
+        btnToFinal.classList.add('visible-btn');
     }
 }
 
-function typeText(text, onComplete) {
-    txt.textContent = '';
-    let charIndex = 0;
-    clearInterval(typingTimer);
-    
-    typingTimer = setInterval(() => {
-        txt.textContent += text[charIndex];
-        charIndex++;
-        if (charIndex >= text.length) {
-            clearInterval(typingTimer);
+function typeVerse(text, onComplete) {
+    dialogText.textContent = '';
+    let charIdx = 0;
+    clearInterval(typingInterval);
+
+    typingInterval = setInterval(() => {
+        dialogText.textContent += text[charIdx];
+        charIdx++;
+        if (charIdx >= text.length) {
+            clearInterval(typingInterval);
             if (onComplete) onComplete();
         }
-    }, 40);
+    }, 35);
 }
 
-// Pantalla 2 -> Pantalla 3 (Botón)
+// Pantalla 2 -> Pantalla 3
 btnToFinal.addEventListener('click', () => {
-    showScene(sf);
-    playMusic();
+    changeScene(sceneFinal);
+    playBackgroundMusic();
 });
 
-// Música de fondo YouTube
-function playMusic() {
-    const c = document.getElementById('youtube-container');
-    c.innerHTML = '<iframe width="1" height="1" style="position:absolute;left:-9999px" allow="autoplay" src="https://www.youtube.com/embed/8ovn4JUL3LA?autoplay=1&loop=1&playlist=8ovn4JUL3LA"></iframe>';
+// Reproduce la música al llegar al final
+function playBackgroundMusic() {
+    const container = document.getElementById('youtube-container');
+    container.innerHTML = '<iframe width="1" height="1" style="position:absolute;left:-9999px" allow="autoplay" src="https://www.youtube.com/embed/8ovn4JUL3LA?autoplay=1&loop=1&playlist=8ovn4JUL3LA"></iframe>';
 }
